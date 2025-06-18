@@ -1,0 +1,72 @@
+version: '3.8'
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - static-volume:/app/Bodhi/static
+      - media-volume:/app/media
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+<<<<<<< Updated upstream
+=======
+    env_file:
+      - .env.db
+>>>>>>> Stashed changes
+
+  celery_worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+      - redis
+    command: 'celery -A Bodhi worker -l info'
+
+  redis:
+    image: redis:latest
+<<<<<<< Updated upstream
+    
+
+  db:
+    image: mysql:8.0
+    command: --default-authentication-plugin=mysql_native_password
+=======
+
+  db:
+    image: postgres:16
+>>>>>>> Stashed changes
+    restart: always
+    env_file:
+      - ./.env.db
+    volumes:
+<<<<<<< Updated upstream
+      - db-data:/var/lib/mysql
+
+  # nginx:
+  #   build: ./nginx
+  #   volumes:
+  #     - static-volume:/app/Bodhi/static  
+  #     - media-volume:/app/media  
+  #   ports:
+  #     - 8001:80
+  #   depends_on:
+  #     - backend
+
+volumes:
+  db-data:
+  static-volume:  
+=======
+      - db-data:/var/lib/postgresql/data
+
+volumes:
+  db-data:
+  static-volume:
+>>>>>>> Stashed changes
+  media-volume:
