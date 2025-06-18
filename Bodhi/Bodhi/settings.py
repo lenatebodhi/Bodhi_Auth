@@ -197,6 +197,6 @@ EMAIL_USE_TLS = True
 DEFAULT_BASE_URL = env.str('DEFAULT_BASE_URL',default='')
 
 
-TWILO_ACCOUNT_SID = env.str('TWILO_ACCOUNT_SID',default='')
-TWILO_ACCESS_TOKEN = env.str('TWILO_ACCESS_TOKEN',default='')
-TWILO_SERVICE_ID= env.str('TWILO_SERVICE_ID',default='')
+# TWILO_ACCOUNT_SID = env.str('TWILO_ACCOUNT_SID',default='')
+# TWILO_ACCESS_TOKEN = env.str('TWILO_ACCESS_TOKEN',default='')
+# TWILO_SERVICE_ID= env.str('TWILO_SERVICE_ID',default='')
