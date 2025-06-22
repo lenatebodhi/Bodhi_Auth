@@ -28,10 +28,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from twilio.rest import Client
 from utils.functions import *
 
-<<<<<<< Updated upstream
-=======
 
->>>>>>> Stashed changes
 class SignUpView(generics.CreateAPIView):
     """
     This API view is used for user registration (sign up).
@@ -52,7 +49,12 @@ class SignUpView(generics.CreateAPIView):
             serializer.validated_data["password"] = make_password(password)
             self.perform_create(serializer)
             return Response(
-                {"message": "Registered Successfully", "data": serializer.data, "status": "success", "status_code": HTTP_200_OK},
+                {
+                    "message": "Registered Successfully",
+                    "data": serializer.data,
+                    "status": "success",
+                    "status_code": HTTP_200_OK,
+                },
                 status=HTTP_200_OK,
             )
         except Exception as e:
@@ -87,7 +89,7 @@ class SendotpView(APIView):
             print("a2")
 
             # Start the verification process
-            client = Client(TWILO_ACCOUNT_SID, TWILO_ACCESS_TOKEN)
+            # client = Client(TWILO_ACCOUNT_SID, TWILO_ACCESS_TOKEN)
             # verification = client.verify \
             #     .services('VA8cb9f32f11d414fd4a57b59709d91e02') \
             #     .verifications \
@@ -240,11 +242,7 @@ class LoginView(APIView):
 #         if login_type == 'PASSWORD':
 #             if not (email or phone_number):
 #                 return Response({'message': 'Either email or phone number is required'}, status=HTTP_400_BAD_REQUEST)
-<<<<<<< Updated upstream
-            
-=======
 
->>>>>>> Stashed changes
 #             print("hi")
 #             print(email)
 #             if email:
@@ -260,11 +258,7 @@ class LoginView(APIView):
 
 #             if user is None:
 #                 return Response({'message': 'Invalid email/phone number or password'}, status=HTTP_401_UNAUTHORIZED)
-<<<<<<< Updated upstream
-            
-=======
 
->>>>>>> Stashed changes
 #         elif login_type == 'OTP':
 #             if not (email or phone_number):
 #                 return Response({'message': 'Either email or phone number is required for OTP login'}, status=HTTP_400_BAD_REQUEST)
@@ -275,15 +269,8 @@ class LoginView(APIView):
 
 #             if not user:
 #                 return Response({'message': 'User not found'}, status=HTTP_404_NOT_FOUND)
-<<<<<<< Updated upstream
-            
-
-            
-            
-=======
 
 
->>>>>>> Stashed changes
 #         # Check the password
 #         if user.check_password(password):
 #             refresh = RefreshToken.for_user(user)
@@ -298,13 +285,8 @@ class LoginView(APIView):
 #         # Return user details or token if using JWT
 #         # Replace this with your actual token generation logic
 #         return Response({'message': 'User signed up successfully', 'user_id': user.id,'token':token}, status=HTTP_200_OK)
-<<<<<<< Updated upstream
-    
-    
-=======
 
 
->>>>>>> Stashed changes
 #     # def authenticate_with_email(self,email, password):
 #     #     print("hi3")
 #     #     print(email, password)
@@ -317,10 +299,6 @@ class LoginView(APIView):
 #         if user and user.check_password(password):
 #             return user
 #         return None
-<<<<<<< Updated upstream
-    
-=======
->>>>>>> Stashed changes
 
 
 class UserViews(viewsets.GenericViewSet):
@@ -329,60 +307,11 @@ class UserViews(viewsets.GenericViewSet):
     serializer_class = UsersViewsSerializer
     queryset = User.objects.filter(is_active=1)
 
-<<<<<<< Updated upstream
-
     def list(self, request, *args, **kwargs):
-
-=======
-    def list(self, request, *args, **kwargs):
->>>>>>> Stashed changes
         """
         Lists the user views for a specific user.
         """
         try:
-<<<<<<< Updated upstream
-            query = self.get_queryset().filter(id=kwargs['user_id'])
-            message = 'listed successfully'
-            serializer_class = self.serializer_class(query, many=True)
-            return Response({"message":message, "results":serializer_class.data,"status": "success",
-                         "status_code":HTTP_200_OK}, status=200)
-        
-        except Exception as error_message:
-                response_data = {"message": f"Something went wrong: {error_message}",
-                                "status": "error",
-                                "status_code": HTTP_500_INTERNAL_SERVER_ERROR}
-                return Response(response_data, status=HTTP_500_INTERNAL_SERVER_ERROR)
-
-
-    def update(self, request, *args, **kwargs):
-
-        """
-        Updates a specific user view.
-        """
-
-        try:
-            instance = get_object_or_404(self.get_queryset(), pk=kwargs.get('user_id'))
-            interests_data = request.data.pop('interests', None)
-
-            serializer = self.serializer_class(
-                instance, data=request.data, partial=True)
-            serializer.is_valid(raise_exception=True)
-
-            # Update interests separately
-            if interests_data is not None:
-                instance.interests.set(interests_data)
-        
-            serializer.save()
-            message = 'updated successfully'
-            return Response({"message":message, "data":serializer.data}, status=200)
-
-        except Exception as error_message:
-                response_data = {"message": f"Something went wrong: {error_message}",
-                                "status": "error",
-                                "status_code": HTTP_500_INTERNAL_SERVER_ERROR}
-                return Response(response_data, status=HTTP_500_INTERNAL_SERVER_ERROR)
-        
-=======
             query = self.get_queryset().filter(id=kwargs["user_id"])
             message = "listed successfully"
             serializer_class = self.serializer_class(query, many=True)
@@ -401,17 +330,24 @@ class UserViews(viewsets.GenericViewSet):
 
     def update(self, request, *args, **kwargs):
         """
-        Updates a specific user view including nested education, qualification, and achievements.
+        Updates a specific user view.
         """
+
         try:
             instance = get_object_or_404(self.get_queryset(), pk=kwargs.get("user_id"))
-            serializer = self.get_serializer(instance, data=request.data, partial=True)
+            interests_data = request.data.pop("interests", None)
+
+            serializer = self.serializer_class(instance, data=request.data, partial=True)
             serializer.is_valid(raise_exception=True)
+
+            # Update interests separately
+            if interests_data is not None:
+                instance.interests.set(interests_data)
+
             serializer.save()
-            return Response(
-                {"message": "updated successfully", "data": serializer.data},
-                status=200
-            )
+            message = "updated successfully"
+            return Response({"message": message, "data": serializer.data}, status=200)
+
         except Exception as error_message:
             response_data = {
                 "message": f"Something went wrong: {error_message}",
@@ -419,23 +355,11 @@ class UserViews(viewsets.GenericViewSet):
                 "status_code": HTTP_500_INTERNAL_SERVER_ERROR,
             }
             return Response(response_data, status=HTTP_500_INTERNAL_SERVER_ERROR)
->>>>>>> Stashed changes
 
 
 class ForgotPassword(APIView):
     authentication_classes = ()
     permission_classes = ()
-<<<<<<< Updated upstream
-    def post(self, request):
-
-        username = request.data.get('username')
-        if is_email(username):
-        
-            if not username:
-                return Response({'message': 'Please provide an email address',
-                                 "status": "error", "status_code": HTTP_400_BAD_REQUEST},
-                                 status=HTTP_400_BAD_REQUEST)
-=======
 
     def post(self, request):
 
@@ -451,18 +375,10 @@ class ForgotPassword(APIView):
                     },
                     status=HTTP_400_BAD_REQUEST,
                 )
->>>>>>> Stashed changes
 
             try:
                 user = User.objects.get(email=username)
             except User.DoesNotExist:
-<<<<<<< Updated upstream
-                return Response({'message': 'User with that email address does not exist',
-                                 "status": "error", "status_code": HTTP_404_NOT_FOUND},
-                                status=HTTP_404_NOT_FOUND)
-            
-           
-=======
                 return Response(
                     {
                         "message": "User with that email address does not exist",
@@ -472,25 +388,11 @@ class ForgotPassword(APIView):
                     status=HTTP_404_NOT_FOUND,
                 )
 
->>>>>>> Stashed changes
             otp = generate_otp()
             user.otp = otp
             user.save()
 
             send_email.delay(
-<<<<<<< Updated upstream
-                'Reset your password',
-                f' The otp is {otp}',
-                username,
-                
-            )
-            return Response({'message': 'OTP has been sent to your registered email address.',
-                              "status": "success",
-                            "status_code": HTTP_200_OK})
-        
-        else:
-            
-=======
                 "Reset your password",
                 f" The otp is {otp}",
                 username,
@@ -505,16 +407,11 @@ class ForgotPassword(APIView):
 
         else:
 
->>>>>>> Stashed changes
             print("hi3")
             try:
                 user = User.objects.get(phone=username)
             except User.DoesNotExist:
-<<<<<<< Updated upstream
-                return Response({'message': 'User with this phone does not exist'}, status=HTTP_400_BAD_REQUEST)
-=======
                 return Response({"message": "User with this phone does not exist"}, status=HTTP_400_BAD_REQUEST)
->>>>>>> Stashed changes
 
             # Start the verification process
             # client = Client(account_sid, auth_token)
@@ -524,11 +421,6 @@ class ForgotPassword(APIView):
             #     .create(to=username, channel='sms')
             # print(verification)
 
-<<<<<<< Updated upstream
-        
-
-=======
->>>>>>> Stashed changes
             return Response({"message": "OTP sent successfully."})
 
 
@@ -540,49 +432,14 @@ class CustomPasswordResetConfirmView(APIView):
 
     def post(self, request):
         try:
-<<<<<<< Updated upstream
-            username = request.data['username']
-            serializer = self.serializer_class(data=request.data)
-            if serializer.is_valid():
-
-            
-=======
             username = request.data["username"]
             serializer = self.serializer_class(data=request.data)
             if serializer.is_valid():
 
->>>>>>> Stashed changes
                 try:
                     user = User.objects.get(Q(phone=username) | Q(email=username))
 
                 except User.DoesNotExist:
-<<<<<<< Updated upstream
-                    return Response({'message': 'User with that email address does not exist',
-                                    "status": "error",
-                                    "status_code": HTTP_404_NOT_FOUND}, status=HTTP_404_NOT_FOUND)
-                
-                    
-
-                # Set the user's password to the new password and save
-                user.password=make_password(serializer.validated_data['new_password'])
-                user.save()
-                return Response({'message': 'Password reset successfully',
-                                 "status": "success",
-                                "status_code": HTTP_200_OK})
-            
-            else:
-                return Response({ "results": serializer.errors,
-                                    "message": "Something went wrong",
-                                    "status": "error",
-                                    "status_code": HTTP_400_BAD_REQUEST}, status=HTTP_400_BAD_REQUEST)
-            
-        except Exception as error_message:
-            response_data = {"message": f"Something went wrong: {error_message}",
-                             "status": "error",
-                             "status_code": HTTP_500_INTERNAL_SERVER_ERROR}
-            return Response(response_data, status=HTTP_500_INTERNAL_SERVER_ERROR)
-        
-=======
                     return Response(
                         {
                             "message": "User with that email address does not exist",
@@ -617,7 +474,6 @@ class CustomPasswordResetConfirmView(APIView):
                 "status_code": HTTP_500_INTERNAL_SERVER_ERROR,
             }
             return Response(response_data, status=HTTP_500_INTERNAL_SERVER_ERROR)
->>>>>>> Stashed changes
 
 
 class DeactivateAccountView(APIView):
@@ -628,13 +484,7 @@ class DeactivateAccountView(APIView):
         user = request.user
         user.is_active = False
         user.save()
-<<<<<<< Updated upstream
-        return Response({"message": "Your account has been deactivated.",
-                         "status": "success",
-                         "status_code":HTTP_200_OK}, status=HTTP_200_OK)
-=======
         return Response(
             {"message": "Your account has been deactivated.", "status": "success", "status_code": HTTP_200_OK},
             status=HTTP_200_OK,
         )
->>>>>>> Stashed changes

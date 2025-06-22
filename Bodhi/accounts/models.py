@@ -2,7 +2,7 @@ from accounts.managers import ActiveManager, CustomUserManager
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from utils.choices import *
+from utils.choices import AuditFields, USER_ROLE_CHOICES, TYPE_LOGIN_CHOICES
 
 
 class Interest(AuditFields):
@@ -53,7 +53,6 @@ class User(AbstractBaseUser, PermissionsMixin, AuditFields):
         parts = [self.first_name, self.middle_name, self.last_name]
         full_name = " ".join(part for part in parts if part)
         return full_name.strip()
-
 
 
 class Education(AuditFields):
