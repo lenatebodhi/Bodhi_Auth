@@ -27,6 +27,7 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework_simplejwt.tokens import RefreshToken
 from twilio.rest import Client
 from utils.functions import *
+from django.db.models import Q
 
 
 class SignUpView(generics.CreateAPIView):
@@ -118,7 +119,6 @@ class LoginView(APIView):
                     status=HTTP_401_UNAUTHORIZED,
                 )
 
-                out
             if user.check_password(password):
                 login(request, user)
                 setattr(user, "is_active", True)
