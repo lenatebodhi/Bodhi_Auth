@@ -30,7 +30,7 @@ JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY", "django-insecure-+y0d%cn__#!97t-*%p
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["13.204.40.5"]
 
 
 # Application definition
@@ -94,18 +94,27 @@ WSGI_APPLICATION = 'Bodhi.wsgi.application'
 #         "PORT": "5432",
 #     }
 # }
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.postgresql",
+#         "NAME": env("POSTGRES_DB", default="bodhi"),
+#         "USER": env("POSTGRES_USER", default="postgres"),
+#         "PASSWORD": env("POSTGRES_PASSWORD", default=""),
+#         "HOST": "db",  # ✅ not localhost
+#         "PORT": 5432,
+#     }
+# }
+
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": env("POSTGRES_DB", default="bodhi"),
         "USER": env("POSTGRES_USER", default="postgres"),
-        "PASSWORD": env("POSTGRES_PASSWORD", default=""),
-        "HOST": "db",  # ✅ not localhost
-        "PORT": 5432,
+        "PASSWORD": env("POSTGRES_PASSWORD", default="postgres"),
+        "HOST": env("POSTGRES_HOST", default="localhost"),
+        "PORT": env.int("POSTGRES_PORT", default=5432),
     }
 }
-
-
 
 
 print(DATABASES)
