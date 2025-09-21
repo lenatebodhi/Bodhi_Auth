@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate, get_user_model, login
 from django.contrib.auth.hashers import check_password, make_password
 from django.contrib.auth.tokens import default_token_generator
 from django.core.cache import cache
+from django.db.models import Q
 from django.shortcuts import get_object_or_404
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
@@ -27,7 +28,14 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework_simplejwt.tokens import RefreshToken
 from twilio.rest import Client
 from utils.functions import *
-from django.db.models import Q
+
+
+class WelcomeView(APIView):
+
+    def get(self, request, *args, **kwargs):
+        print("bye")
+        message = "working fine"
+        return Response({"message": message})
 
 
 class SignUpView(generics.CreateAPIView):
