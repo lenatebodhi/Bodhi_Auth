@@ -9,7 +9,7 @@ services:
       - static-volume:/app/Bodhi/static
       - media-volume:/app/media
     ports:
-      - "8000:8000"
+      - "80:8000"
     depends_on:
       - db
     env_file:
