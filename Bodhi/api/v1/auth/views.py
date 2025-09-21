@@ -28,10 +28,11 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework_simplejwt.tokens import RefreshToken
 from twilio.rest import Client
 from utils.functions import *
+from rest_framework.permissions import AllowAny  
 
 
 class WelcomeView(APIView):
-
+    permission_classes = [AllowAny]
     def get(self, request, *args, **kwargs):
         print("bye")
         message = "working fine"
