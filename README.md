@@ -29,9 +29,9 @@ DATABASE_HOST=localhost
 # Email Configuration
 EMAIL_BACKEND=django.core.mail.backends.smtp.EmailBackend
 EMAIL_HOST=smtp.gmail.com
-EMAIL_HOST_PASSWORD=yygjiaizxcvnmjyy
-EMAIL_HOST_USER=flycatchtechoodo@gmail.com
-DEFAULT_FROM_EMAIL=flycatchtechoodo@gmail.com
+EMAIL_HOST_PASSWORD=rvvj jkhu qjux ndmi
+EMAIL_HOST_USER=lenatebodhi@gmail.com
+DEFAULT_FROM_EMAIL=lenatebodhi@gmail.com
 EMAIL_PORT=587
 EMAIL_USE_TLS=True
 
